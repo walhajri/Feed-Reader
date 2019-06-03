@@ -36,7 +36,7 @@ $(function() {
 
     // test suite for The menu functionality 
     describe('The Menu',function(){
-        let menuClassName = document.getElementsByTagName('body')[0].className;
+        let menuClassName = document.getElementsByTagName('body')[0].classList[0]
         // ensures the menu element is hidden by default
         it('should be hidden by default',function(){
             expect(menuClassName).toBe('menu-hidden')
@@ -45,11 +45,11 @@ $(function() {
         // ensures the menu changes visibility when the menu icon is clicked.
         it('button should toggle on/off',function(){
             document.getElementsByClassName('menu-icon-link')[0].click()
-            menuClassName = document.getElementsByTagName('body')[0].className;
+            menuClassName = document.getElementsByTagName('body')[0].classList[0]
             expect(menuClassName).not.toBe('menu-hidden')
 
             document.getElementsByClassName('menu-icon-link')[0].click()
-            menuClassName = document.getElementsByTagName('body')[0].className;
+            menuClassName = document.getElementsByTagName('body')[0].classList[0]
             expect(menuClassName).toBe('menu-hidden')
         });
     });
@@ -62,7 +62,7 @@ $(function() {
         });
         // ensures when the loadFeed function is called and completes its work, there is at least a single entry element within the feed container.
         it('at least should be greater than one',function(){
-           expect($('.entry-link').length).not.toBe(0); 
+           expect($('.entry-link .entry').length).not.toBe(0); 
         });
     });
     
@@ -73,12 +73,12 @@ $(function() {
         beforeEach(function(done){
             loadFeed(0,function(){
                 oldFeed = document.documentElement.innerHTML;
-                done();
+                loadFeed(1,function(){
+                    newFeed = document.documentElement.innerHTML;
+                    done();
+                });
             });
-            loadFeed(1,function(){
-                newFeed = document.documentElement.innerHTML;
-                done();
-            })
+            
         });
         //ensures when a new feed is loaded by the loadFeed function that the content actually changes.
         it('should be changed',function(done){
